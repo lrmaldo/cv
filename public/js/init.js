@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 var uiConfig = {
-        signInSuccessUrl: 'http://localhost:8383/cv/index.html',
+    //githubdominio
+        signInSuccessUrl:'https://lrmaldo.github.io/cv/public/',
+        //localhost dominio
+        //signInSuccessUrl: 'http://localhost:8383/cv/index.html',
         'callbacks': {
       // Called when the user has been successfully signed in.
       'signInSuccess': function(user, credential, redirectUrl) {
