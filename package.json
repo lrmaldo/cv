@@ -11,6 +11,7 @@
   "author": "Leo",
   "contributors": [],
   "dependencies": {
+    "firebaseui": "^2.4.0",
     "lightbox2": "^2.9.0"
   }
 }

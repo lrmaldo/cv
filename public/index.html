@@ -13,7 +13,7 @@ and open the template in the editor.
         <link href='https://fonts.googleapis.com/css?family=Roboto:500,300,400' rel='stylesheet' type='text/css'>
         
         <!-- FRAMEWORK CSS -->
-        <link rel="stylesheet" href="css/materialize.min.css">
+       <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--<link rel="stylesheet" href="css/lightbox.css">-->
           <!-- FONT ICONS -->
@@ -25,7 +25,9 @@ and open the template in the editor.
         <link rel="stylesheet" href="css/timeline.css">
         <link rel="stylesheet" href="css/lime.css">
          <link rel="stylesheet" href="css/mprogress.min.css">
-        <link rel="stylesheet" href="css/lightbox.css" />
+        <link rel="stylesheet" href="css/lightbox.css" >
+        <link rel="stylesheet" href="css/firebaseui.css">
+        
  
   
     </head>
@@ -64,18 +66,38 @@ and open the template in the editor.
                                     adaptación y capacidad de trabajar en
                                     equipo, en condiciones de alta presión,
                                     con iniciativa para resolver problemas
-                                    eficientemente y lograr las metas y
+                                    eficientemente, lograr las metas y
                                     objetivos.</p>
                                 
                                 
-                                <a href="#" class="btn waves-effect">Descargar CV</a>
+                                <a href="#modal1" class="btn waves-effect modal-trigger">Descargar CV</a>
                                 <a href="#contact-form" class="btn btn-success waves-effect">Contactarme</a>
+                                <a  id="descarga" style="display:none"class=" center-align  "  >Descargar aquí</a>
+                                <a href="#salir" id="id_Salir" style="display:none"class=" center-align  ">Salir</a>
                             </div>
                         
+                        
+                    </div>
+                    <div class="col m12">
+                         
                     </div>
                     </div>
+                    
                 </div>
         </section>
+        
+         <div style="display:none;" id="firebaseui-auth-container"></div>
+         <div id="modal1" class="modal">
+                        <div class="modal-content">
+                            <h4>CV descarga</h4>
+                            <p class="center-align">Por razones de seguridad,solo pido que inicies sesión para poder descargar mi CV! gracias :)</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a id="si_modal" href="#firebaseui-auth-container" class="modal-action modal-close waves-effect waves-green btn-flat">Sí, descargar</a>
+                        </div>
+                    </div>
+           
+         
          <!-- =========================================
                            SKILLS   
         ==========================================-->
@@ -243,31 +265,36 @@ terrenos                                           y departamentos para la ciuda
                 				<a href=""><h2>INGENIERO EN SISTEMAS COMPUTACIONALES</h2></a>
                                                 <a href="https://itsva.edu.mx"><span>Institución Tecnológico Superior de Valladolid</span></a>
                                                 <br><span>2012 - 2017 </span>
-                				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, 
-                				dolorum provident rerum aut hic quasi placeat iure tempora.</p>
+                				<!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, 
+                				dolorum provident rerum aut hic quasi placeat iure tempora.</p>-->
                 			</div> <!-- cd-timeline-content -->
                 		</div> <!-- cd-timeline-block -->
-                
+                                 <!--QUITAR ESTO
                 		<div class="cd-timeline-block wow fadeIn a4" data-wow-delay="0.4s">
                 			<div class="cd-timeline-img">
                 			</div> <!-- cd-timeline-img -->
+                                 <!-- QUITAR ESTO
                 			<div class="cd-timeline-content col m5 s12 z-depth-1">
                 				<a href=""><h2>UI & WEB DESIGNER @Academy</h2></a>
                 				<span>11 Jan 2015 </span>
                 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, 
                 				dolorum provident rerum aut hic quasi placeat iure tempora.</p>
                 			</div> <!-- cd-timeline-content -->
-                		</div> <!-- cd-timeline-block -->
-                		<div class="cd-timeline-block wow fadeIn a5" data-wow-delay="0.5s">
+                		<!--QUITAR ESTO
+                                    </div> <!-- cd-timeline-block --> 
+                		<!-- QUITAR ESTO
+                                <div class="cd-timeline-block wow fadeIn a5" data-wow-delay="0.5s">
                 			<div class="cd-timeline-img">
             			    </div> <!-- cd-timeline-img -->
+                                <!--QUITAR ESTO
                 			<div class="cd-timeline-content col m5 s12 z-depth-1">
                 				<a href=""><h2>UI & WEB DESIGNER @Academy</h2></a>
                 				<span>11 Jan 2015 </span>
                 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, 
                 				dolorum provident rerum aut hic quasi placeat iure tempora.</p>
                 			</div> <!-- cd-timeline-content -->
-                		</div> <!-- cd-timeline-block -->
+                	<!--QUITAR ESTO
+                                        </div> <!-- cd-timeline-block -->
                 	</div> <!-- cd-timeline -->
                     
                 </div>
@@ -437,11 +464,13 @@ terrenos                                           y departamentos para la ciuda
                                     <label for="message" class="h4 ">Mensaje*</label>
                                     <textarea id="message" class="form-control materialize-textarea validate" required></textarea>           
                                 </div>
-                                <button type="submit" id="form-submit" class="btn btn-success waves-effect wow fadeIn a7" >Submit</button>
+                                <button type="submit" id="form-submit" class="btn btn-success waves-effect wow fadeIn a7" >Enviar</button>
                                                              
                             </form>                                     
                         </div> 
                     </div>
+                    
+          
                     
                     <!-- =========================================
                             INTEREST  
@@ -465,14 +494,19 @@ terrenos                                           y departamentos para la ciuda
        
          
          <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.js'></script>
+        
+         <!--<script src="js/firebaseui.js"></script>-->
+    
     <script src="https://cdn.jsdelivr.net/jquery.mixitup/latest/jquery.mixitup.min.js"></script>  
     <script src="js/wow.js"></script>
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/2.4.0/firebase-ui-auth__es_419.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/4.5.1/firebase.js"></script>
     <script src="js/init.js"></script>
     <script src="js/jquery.sticky.js"></script>
     <script src="js/validator.min.js"></script>
-    
+    <script src="js/materialize.js"></script>
+    <script src="js/materialize.min.js"></script>
     <script src="js/jquery.nav.js"></script>
     <script src="js/jquery.fancybox.pack.js"></script>
     

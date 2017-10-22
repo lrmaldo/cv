@@ -3,17 +3,166 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var uiConfig = {
+        signInSuccessUrl: 'http://localhost:8383/cv/index.html',
+        'callbacks': {
+      // Called when the user has been successfully signed in.
+      'signInSuccess': function(user, credential, redirectUrl) {
+        handleSignedInUser(user);
+        
+// Do not redirect.
+        return false;
+      }
+        },
+        signInOptions: [
+          // Leave the lines as is for the providers you want to offer your users.
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+          //firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+         // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+          //firebase.auth.GithubAuthProvider.PROVIDER_ID,
+          firebase.auth.EmailAuthProvider.PROVIDER_ID,
+         // firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+          {
+            provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+            // Invisible reCAPTCHA with image challenge and bottom left badge.
+           
+            defaultCountry: 'MX', // Set default country to the United Kingdom (+44).
+              // For prefilling the national number, set defaultNationNumber.
+              // This will only be observed if only phone Auth provider is used since
+              // for multiple providers, the NASCAR screen will always render first
+              // with a 'sign in with phone number' button.
+              defaultNationalNumber: '1234567890',
 
+              loginHint: '+11234567890'
+          }
+     
+          
+        ],
+        
+        // Terms of service url.
+        tosUrl: '<your-tos-url>',
+                 
+      
+      
+          
+       
+      };
+      var handleSignedInUser = function(user) {
+  document.getElementById('id_Salir').style.display = 'block';
+  document.getElementById('descarga').style.display = 'block';
+  var storage = firebase.storage();
+  
+ // var storageRef = storage.ref();
+  var httpsReference = storage.refFromURL('https://firebasestorage.googleapis.com/v0/b/cv-leo.appspot.com/o/cv_ing_Leonardo.pdf?alt=media&token=d289b2dc-1a1f-44bc-b370-3ea721bc7fbe');
+  
+  //var gsReference = storage.refFromURL('gs://cv-leo.appspot.com/cv_ing_Leonardo.pdf');
+  var img = document.getElementById('descarga');
+  img.href = 'https://firebasestorage.googleapis.com/v0/b/cv-leo.appspot.com/o/cv%2Fcv_ing_Leonardo.pdf?alt=media&token=c45f9db8-7e29-4d27-a8fa-908bfc4b59ba';
+  img.download ="cv.pdf";
+  
+//  storageRef.child('cv_ing_Leonardo.pdf').getDownloadURL().then(function(url) {
+//  // `url` is the download URL for 'images/stars.jpg'
+//
+//  // This can be downloaded directly:
+//  var xhr = new XMLHttpRequest();
+//  xhr.responseType = 'blob';
+//  xhr.onload = function(event) {
+//    var blob = xhr.response;
+//  };
+//  xhr.open('GET', url);
+//  xhr.send();
+//
+//  // Or inserted into an <img> element:
+//  var img = document.getElementById('descarga');
+//  img.download = url;
+//}).catch(function(error) {
+//  // Handle any errors
+//});
+  
+  $('descarga').each(function() {
+  var $a = $(this),
+      fileUrl = $a.attr('href');
+
+  $a.attr('href', 'data:application/octet-stream,' + encodeURIComponent(fileUrl));
+});
+  
+//  // Create a reference with an initial file path and name
+//var storage = firebase.storage();
+//var pathReference = storage.ref('cv_ing_Leonardo.pdf');
+//
+//// Create a reference from a Google Cloud Storage URI
+//var gsReference = storage.refFromURL('gs://cv-leo.appspot.com/cv_ing_Leonardo.pdf');
+//
+//// Create a reference from an HTTPS URL
+//// Note that in the URL, characters are URL escaped!
+//var httpsReference = storage.refFromURL('https://firebasestorage.googleapis.com/v0/b/cv-leo.appspot.com/o/cv_ing_Leonardo.pdf?alt=media&token=d289b2dc-1a1f-44bc-b370-3ea721bc7fbe');
+//  
+  //console.log("pa "+pathReference+" "+gsReference+" "+httpsReference);
+//  document.getElementById('user-signed-out').style.display = 'none';
+//  document.getElementById('name').textContent = user.displayName;
+//  document.getElementById('email').textContent = user.email;
+//  document.getElementById('phone').textContent = user.phoneNumber;
+//  if (user.photoURL){
+//    document.getElementById('photo').src = user.photoURL;
+//    document.getElementById('photo').style.display = 'block';
+//  } else {
+//    document.getElementById('photo').style.display = 'none';
+//  }
+console.log("error",user.email);
+};
+    var handleSignedOutUser = function() {
+  document.getElementById('descarga').style.display = 'none';
+  document.getElementById('id_Salir').style.display = 'none';
+  console.log("salio usuario");
+ // document.getElementById('user-signed-out').style.display = 'block';
+  //ui.start('#firebaseui-container', getUiConfig());
+};  
+
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBEEid_WMKWcR8co2z7hDC47RE0hLVoCR4",
+    authDomain: "cv-leo.firebaseapp.com",
+    databaseURL: "https://cv-leo.firebaseio.com",
+    projectId: "cv-leo",
+    storageBucket: "cv-leo.appspot.com",
+    messagingSenderId: "181262371618"
+  };
+  firebase.initializeApp(config);
+  
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
+ui.start('#firebaseui-auth-container', uiConfig);
+
+firebase.auth().onAuthStateChanged(function(user) {
+  //document.getElementById('loading').style.display = 'none';
+  //document.getElementById('loaded').style.display = 'block';
+  user ? handleSignedInUser(user) : handleSignedOutUser();
+});
+
+
+//////////////////////////////////////////////////////////////////////////////////
 
  $( document ).ready(function() {
         "use strict";
         
+         $("#si_modal").click(function(){
+  
+  //$('#id_Salir').toggle();
+  $('#firebaseui-auth-container').toggle();   
+  
+});
+
+document.getElementById('id_Salir').addEventListener('click', function() {
+    firebase.auth().signOut();
+  });
+
+
         // NAV
         $('.button-collapse').sideNav({
             closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
             }
         );
         
+        $('.modal').modal();
     /**************************************************************************
             Style demo
     **************************************************************************/
@@ -99,24 +248,35 @@
 
 
         function submitForm(){
+            var database = firebase.database();
           // Initiate Variables With Form Content
+         
           var name = $("#name").val();
           var email = $("#email").val();
           var message = $("#message").val();
+          var aleatorio = Math.round(Math.random()*10000);
+          firebase.database().ref('contacto/'+aleatorio+'-c/').set({
+            name: name,
+            email: email,
+            message : message
+          });
+          $("#contactForm")[0].reset();
+           var $toastContent = $('<span>Mensaje Enviado!!</span>');
+             Materialize.toast($toastContent, 5000,'rounded');
     
-          $.ajax({
-              type: "POST",
-              url: "process.php",
-              data: "name=" + name + "&email=" + email + "&message=" + message,
-              success : function(text){
-                  if (text == "success"){
-                      formSuccess();
-                    } else {
-                      formError();
-                      submitMSG(false,text);
-                    }
-                }
-            });
+//          $.ajax({
+//              type: "POST",
+//              url: "process.php",
+//              data: "name=" + name + "&email=" + email + "&message=" + message,
+//              success : function(text){
+//                  if (text == "success"){
+//                      formSuccess();
+//                    } else {
+//                      formError();
+//                      submitMSG(false,text);
+//                    }
+//                }
+//            });
         }
         function formSuccess(){
             $("#contactForm")[0].reset();
