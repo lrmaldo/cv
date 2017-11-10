@@ -50,9 +50,16 @@ var uiConfig = {
           
        
       };
-      var handleSignedInUser = function(user) {
+     
+
+
+
+var handleSignedInUser = function(user) {
+   
+   
   document.getElementById('id_Salir').style.display = 'block';
   document.getElementById('descarga').style.display = 'block';
+  
   var storage = firebase.storage();
   
  // var storageRef = storage.ref();
@@ -89,37 +96,18 @@ var uiConfig = {
   $a.attr('href', 'data:application/octet-stream,' + encodeURIComponent(fileUrl));
 });
   
-//  // Create a reference with an initial file path and name
-//var storage = firebase.storage();
-//var pathReference = storage.ref('cv_ing_Leonardo.pdf');
-//
-//// Create a reference from a Google Cloud Storage URI
-//var gsReference = storage.refFromURL('gs://cv-leo.appspot.com/cv_ing_Leonardo.pdf');
-//
-//// Create a reference from an HTTPS URL
-//// Note that in the URL, characters are URL escaped!
-//var httpsReference = storage.refFromURL('https://firebasestorage.googleapis.com/v0/b/cv-leo.appspot.com/o/cv_ing_Leonardo.pdf?alt=media&token=d289b2dc-1a1f-44bc-b370-3ea721bc7fbe');
-//  
-  //console.log("pa "+pathReference+" "+gsReference+" "+httpsReference);
-//  document.getElementById('user-signed-out').style.display = 'none';
-//  document.getElementById('name').textContent = user.displayName;
-//  document.getElementById('email').textContent = user.email;
-//  document.getElementById('phone').textContent = user.phoneNumber;
-//  if (user.photoURL){
-//    document.getElementById('photo').src = user.photoURL;
-//    document.getElementById('photo').style.display = 'block';
-//  } else {
-//    document.getElementById('photo').style.display = 'none';
-//  }
 console.log("error",user.email);
 };
+
+
+
+
     var handleSignedOutUser = function() {
   document.getElementById('descarga').style.display = 'none';
   document.getElementById('id_Salir').style.display = 'none';
+  ui.start('#firebaseui-auth-container', uiConfig);
   console.log("salio usuario");
- // document.getElementById('user-signed-out').style.display = 'block';
-  //ui.start('#firebaseui-container', getUiConfig());
-};  
+  };  
 
   // Initialize Firebase
   var config = {
@@ -133,13 +121,26 @@ console.log("error",user.email);
   firebase.initializeApp(config);
   
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
-ui.start('#firebaseui-auth-container', uiConfig);
+
 
 firebase.auth().onAuthStateChanged(function(user) {
   //document.getElementById('loading').style.display = 'none';
   //document.getElementById('loaded').style.display = 'block';
+ 
   user ? handleSignedInUser(user) : handleSignedOutUser();
+  
+},function (error){
+    var errorCode = error.code;
+  var errorMessage = error.message;
+  if (errorCode === 'auth/account-exists-with-different-credential') {
+     document.getElementById('firebaseui-auth-container').style.display='block';
+    
+  } else {
+    alert(errorMessage);
+  }
+  console.log(error);
 });
+
 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -150,7 +151,8 @@ firebase.auth().onAuthStateChanged(function(user) {
          $("#si_modal").click(function(){
   
   //$('#id_Salir').toggle();
-  $('#firebaseui-auth-container').toggle();   
+ // $('#firebaseui-auth-container').toggle();   
+ document.getElementById('firebaseui-auth-container').style.display='block';
   
 });
 
