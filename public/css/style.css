@@ -1051,3 +1051,10 @@ textarea.materialize-textarea:focus:not([readonly]) {
   justify-content: center;
   color: #fff;
   background-color: #2196f3; }
+
+@media print and (color) {
+   * {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+   }
+}
